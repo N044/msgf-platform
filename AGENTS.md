@@ -1,57 +1,158 @@
-# Student Governance Platform
+# Student Governance Platform (MSGF)
 
-## Project Goal
+## Project Overview
 
-Student Governance Platform is a visual-first documentation website for Universitas Mikroskil.
+Student Governance Platform (MSGF) is the official digital platform of Universitas Mikroskil that explains the Student Governance Framework.
 
-The platform explains the governance framework, student organizations, committee structures, governance lifecycle, and institutional policies.
+The platform serves as a visual-first knowledge hub for:
+- Students
+- Student Leaders
+- Student Affairs Office
+- Advisors
+- University Management
 
-The website prioritizes clarity, accessibility, and modern visual storytelling.
+The website focuses on clarity, transparency, and accessibility.
 
 ---
 
 ## Tech Stack
 
-- Next.js
+- Next.js 15 (App Router)
 - TypeScript
 - Tailwind CSS
-- App Router
+- React
 
 ---
 
-## Design Principles
+## Architecture Principles
 
-- Visual First
+- Design System First
 - Content Driven
+- Component Driven
+- Bilingual Ready
+- Mobile First
 - Accessibility First
-- Responsive First
-- Mobile Friendly
-- Institutional Design
 
 ---
 
-## Architecture
+## Project Structure
 
-Components never contain long content.
+The project follows a modular architecture.
 
-All content must come from /src/content.
+- app → Routing
+- components → UI
+- content → Static content
+- lib → Shared logic
+- styles → Global styling
+- types → Shared types
+- utils → Helper functions
 
-Example:
+Create new modules only when necessary.
 
-components/
-content/
+## Coding Rules
 
-Never hardcode long text.
+- Use TypeScript.
+- Use functional React components.
+- Use Tailwind CSS only.
+- Do not use inline styles.
+- Keep components small and reusable.
+- Prefer composition over duplication.
+- Use PascalCase for components.
+- Use kebab-case for folders.
 
 ---
 
-## Coding Standards
+## Content Rules
 
-- Use TypeScript
-- Functional Components
-- PascalCase Components
-- kebab-case folders
-- Use @/* alias
-- Tailwind only
-- No inline styles
-- No duplicated component
+- Never hardcode long content inside React components.
+- Store all page content inside `/src/content`.
+- Keep components responsible only for presentation.
+- Prepare the content structure for future bilingual support.
+
+---
+
+## UI Principles
+
+The interface should be:
+
+- Clean
+- Minimal
+- Professional
+- Institutional
+- Visual-first
+
+Avoid unnecessary animations or decorative elements.
+
+---
+
+## Before Making Changes
+
+Before creating new files or components:
+
+- Reuse existing components whenever possible.
+- Keep the project structure clean.
+- Avoid unnecessary dependencies.
+- Do not modify unrelated files.
+
+## Protected Files
+
+Do not modify these files unless explicitly requested:
+
+- package.json
+- postcss.config.mjs
+- next.config.ts
+- tsconfig.json
+- src/app/layout.tsx
+- src/styles/globals.css
+
+If a task requires changes to these files, explain the reason first before making modifications.
+
+## Naming Conventions
+
+- Components: PascalCase
+- Hooks: camelCase with `use` prefix
+- Utility functions: camelCase
+- Constants: UPPER_SNAKE_CASE
+- Folder names: kebab-case
+- Route folders: kebab-case
+
+## Import Rules
+
+- Prefer using the `@/*` import alias.
+- Avoid long relative imports whenever possible.
+- Group imports as:
+  1. React / Next.js
+  2. External libraries
+  3. Internal modules
+  4. Types
+  5. Styles
+
+  ## Git Rules
+
+- Keep commits focused on a single purpose.
+- Do not mix refactoring and feature development.
+- Preserve a clean Git history.
+
+## AI Collaboration
+
+Before making changes:
+
+- Read this AGENTS.md.
+- Understand the current project structure.
+- Explain the proposed changes before modifying protected files.
+- Keep changes minimal.
+- Do not refactor unrelated code.
+
+## Documentation
+
+When introducing a new architecture decision,
+prefer documenting it inside `/docs`
+instead of leaving the rationale only in code comments.
+
+## Scope
+
+This project is intended to become the official documentation platform for Student Governance at Universitas Mikroskil.
+
+The platform is informational.
+
+Avoid implementing authentication, dashboards, CRUD features, or databases unless explicitly requested.
