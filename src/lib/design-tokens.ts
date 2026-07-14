@@ -1,20 +1,14 @@
 export const colors = {
-  brand: {
-    primary: "#0F3D3E",
-    secondary: "#1F6F6B",
-    accent: "#F2C94C",
-  },
-  neutral: {
-    50: "#F8FAFC",
-    100: "#F3F4F6",
-    500: "#6B7280",
-    900: "#111827",
-  },
   background: "#F8FAFC",
   surface: "#FFFFFF",
+  border: "#E5E7EB",
   text: "#111827",
   textMuted: "#6B7280",
-  border: "#E5E7EB",
+  primary: "#0F3D3E",
+  secondary: "#1F6F6B",
+  success: "#2F855A",
+  warning: "#C05621",
+  danger: "#C53030",
 } as const;
 
 export const typography = {
@@ -43,14 +37,27 @@ export const typography = {
   },
 } as const;
 
-export const borderRadius = {
+export const spacing = {
+  0: "0",
+  1: "0.25rem",
+  2: "0.5rem",
+  3: "0.75rem",
+  4: "1rem",
+  6: "1.5rem",
+  8: "2rem",
+  12: "3rem",
+  16: "4rem",
+  24: "6rem",
+} as const;
+
+export const radius = {
   sm: "0.25rem",
   md: "0.5rem",
   lg: "0.75rem",
   xl: "1rem",
 } as const;
 
-export const radius = borderRadius;
+export const borderRadius = radius;
 
 export const shadows = {
   sm: "0 1px 2px rgba(15, 61, 62, 0.08)",
@@ -64,21 +71,6 @@ export const containerWidth = {
   lg: "64rem",
   xl: "80rem",
 } as const;
-
-export const spacingScale = {
-  0: "0",
-  1: "0.25rem",
-  2: "0.5rem",
-  3: "0.75rem",
-  4: "1rem",
-  6: "1.5rem",
-  8: "2rem",
-  12: "3rem",
-  16: "4rem",
-  24: "6rem",
-} as const;
-
-export const spacing = spacingScale;
 
 export const breakpoints = {
   sm: "640px",
@@ -94,7 +86,7 @@ export const zIndex = {
   modal: 1200,
 } as const;
 
-export const animation = {
+export const motion = {
   duration: "200ms",
   easing: "ease-out",
 } as const;
@@ -102,9 +94,11 @@ export const animation = {
 export const designTokens = {
   colors,
   typography,
-  borderRadius,
+  spacing,
+  radius,
   shadows,
   containerWidth,
-  spacingScale,
   breakpoints,
+  zIndex,
+  motion,
 } as const;

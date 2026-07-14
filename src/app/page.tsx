@@ -1,9 +1,11 @@
+import { GovernanceOverview } from "@/components/home/GovernanceOverview";
+import { Hero } from "@/components/home/Hero";
+
 export default function HomePage() {
   return (
-    <main className="min-h-screen flex items-center justify-center">
-      <h1 className="text-4xl font-bold">
-        Student Governance Platform
-      </h1>
+    <main>
+      <Hero />
+      <GovernanceOverview />
     </main>
   );
 }

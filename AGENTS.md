@@ -156,3 +156,17 @@ This project is intended to become the official documentation platform for Stude
 The platform is informational.
 
 Avoid implementing authentication, dashboards, CRUD features, or databases unless explicitly requested.
+
+## Visual Communication
+
+Prefer explaining concepts using:
+
+- diagrams
+- flowcharts
+- relationship maps
+- timelines
+- iconography
+
+Avoid long paragraphs whenever possible.
+
+Every page should communicate one main concept visually before using explanatory text.
