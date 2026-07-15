@@ -75,6 +75,7 @@ export function GovernanceLayer({ layer, nodesById }: GovernanceLayerProps) {
                     <GovernanceRelationship
                       type={row.relationshipToNext}
                       label={row.relationshipLabel}
+                      direction={row.relationshipDirection}
                       className="py-4"
                     />
                   ) : null}

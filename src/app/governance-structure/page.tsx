@@ -1,17 +1,20 @@
 import { GovernanceArchitecture } from "@/components/governance/GovernanceArchitecture";
 import { GovernanceLegend } from "@/components/governance/GovernanceLegend";
+import { GovernanceSupport } from "@/components/governance/GovernanceSupport";
+import { RoleInformationPanel } from "@/components/governance/RoleInformationPanel";
 import { Container } from "@/components/layout/Container";
 import { Section } from "@/components/layout/Section";
 import { BackButton } from "@/components/navigation/BackButton";
 import {
   governanceNodes,
-  governanceRelationships,
   governanceStructureContent,
 } from "@/content/governance-structure";
 
 export default function GovernanceStructurePage() {
-  const { hero, overview, architecture, legend, principles, relatedDocuments } =
+  const { hero, overview, architecture, support, legend, principles, relatedDocuments } =
     governanceStructureContent;
+  const featuredNode =
+    governanceNodes.find((node) => node.id === architecture.featuredNodeId) ?? governanceNodes[0];
 
   return (
     <main>
@@ -80,9 +83,11 @@ export default function GovernanceStructurePage() {
               layers={architecture.layers}
               nodes={governanceNodes}
               bridges={architecture.bridges}
-              relationships={governanceRelationships}
-              featuredNodeId={architecture.featuredNodeId}
             />
+
+            <GovernanceSupport content={support} />
+
+            {featuredNode ? <RoleInformationPanel node={featuredNode} /> : null}
           </div>
         </Container>
       </Section>

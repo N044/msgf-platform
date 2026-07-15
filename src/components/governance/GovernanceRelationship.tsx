@@ -3,6 +3,7 @@ import type { GovernanceRelationshipType } from "@/content/governance-structure"
 interface GovernanceRelationshipProps {
   type: GovernanceRelationshipType;
   orientation?: "vertical" | "horizontal";
+  direction?: "up" | "down";
   label?: string;
   className?: string;
 }
@@ -18,8 +19,12 @@ const borderClasses = {
 };
 
 const arrowClasses = {
-  vertical:
-    "after:absolute after:bottom-0 after:left-1/2 after:h-2 after:w-2 after:-translate-x-1/2 after:translate-y-1/2 after:rotate-45 after:border-b after:border-r after:border-[#0A1737]/35",
+  vertical: {
+    down:
+      "after:absolute after:bottom-0 after:left-1/2 after:h-2 after:w-2 after:-translate-x-1/2 after:translate-y-1/2 after:rotate-45 after:border-b after:border-r after:border-[#0A1737]/35",
+    up:
+      "after:absolute after:top-0 after:left-1/2 after:h-2 after:w-2 after:-translate-x-1/2 after:-translate-y-1/2 after:-rotate-[135deg] after:border-b after:border-r after:border-[#0A1737]/35",
+  },
   horizontal:
     "after:absolute after:right-0 after:top-1/2 after:h-2 after:w-2 after:translate-x-1/2 after:-translate-y-1/2 after:-rotate-45 after:border-b after:border-r after:border-[#0A1737]/35",
 };
@@ -27,6 +32,7 @@ const arrowClasses = {
 export function GovernanceRelationship({
   type,
   orientation = "vertical",
+  direction = "down",
   label,
   className = "",
 }: GovernanceRelationshipProps) {
@@ -36,7 +42,9 @@ export function GovernanceRelationship({
     authority: "",
     coordination: "border-dashed border-[#0A1737]/30",
     advisory: "border-dotted border-emerald-500/60",
-    reporting: `relative ${arrowClasses[orientation]}`,
+    reporting: `relative ${
+      orientation === "vertical" ? arrowClasses.vertical[direction] : arrowClasses.horizontal
+    }`,
   }[type];
 
   return (

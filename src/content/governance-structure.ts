@@ -24,6 +24,7 @@ export interface GovernanceNodeRowData {
   nodeIds: string[];
   relationshipToNext?: GovernanceRelationshipType;
   relationshipLabel?: string;
+  relationshipDirection?: "up" | "down";
   variant?: "standard" | "compact";
 }
 
@@ -43,14 +44,6 @@ export interface GovernanceLayerData {
   columns: GovernanceColumnData[];
 }
 
-export interface GovernanceRelationshipData {
-  id: string;
-  from: string;
-  to: string;
-  type: GovernanceRelationshipType;
-  label: string;
-}
-
 export interface GovernanceBridgeData {
   afterLayerId: string;
   type: GovernanceRelationshipType;
@@ -61,6 +54,20 @@ export interface GovernanceLegendItem {
   type: GovernanceRelationshipType;
   label: string;
   description: string;
+}
+
+export interface GovernanceSupportCardData {
+  title: string;
+  description: string;
+  relationship: "advisory" | "coaching";
+  appointedBy?: string;
+}
+
+export interface GovernanceSupportContent {
+  eyebrow: string;
+  title: string;
+  description: string;
+  cards: GovernanceSupportCardData[];
 }
 
 export const governanceStructureContent = {
@@ -96,7 +103,7 @@ export const governanceStructureContent = {
     eyebrow: "Architecture diagram",
     title: "Governance relationships as a coordinated architecture.",
     description:
-      "The diagram separates hierarchy, coordination, reporting, and advisory guidance so each role can be understood without reducing the system to a conventional org chart.",
+      "The diagram separates hierarchy, coordination, and reporting so each role can be understood without reducing the system to a conventional org chart.",
     featuredNodeId: "student-affairs-office",
     layers: [
       {
@@ -144,6 +151,7 @@ export const governanceStructureContent = {
                 nodeIds: ["head-of-study-program"],
                 relationshipToNext: "reporting",
                 relationshipLabel: "Departmental reporting",
+                relationshipDirection: "up",
               },
               {
                 nodeIds: ["HMPS"],
@@ -159,12 +167,14 @@ export const governanceStructureContent = {
               {
                 nodeIds: ["vice-rector-I"],
                 relationshipToNext: "coordination",
-                relationshipLabel: "Non-academic coordination",
+                relationshipLabel: "Administrative reporting",
+                relationshipDirection: "up",
               },
               {
                 nodeIds: ["student-affairs-office"],
                 relationshipToNext: "reporting",
                 relationshipLabel: "Operational reporting",
+                relationshipDirection: "up",
               },
               {
                 nodeIds: ["students-union"],
@@ -179,32 +189,6 @@ export const governanceStructureContent = {
           },
         ],
       },
-      {
-        id: "advisory-layer",
-        eyebrow: "Layer 3",
-        title: "Advisory Layer",
-        description:
-          "Advisors guide student organizations while remaining outside the formal hierarchy.",
-        columns: [
-          {
-            id: "advisor-guidance",
-            title: "Guidance network",
-            description: "Advisory support for recognized student organizations.",
-            tone: "advisory",
-            rows: [
-              {
-                nodeIds: ["advisor"],
-                relationshipToNext: "advisory",
-                relationshipLabel: "Guidance",
-              },
-              {
-                nodeIds: ["HMPS", "students-union", "students-club", "students-society"],
-                variant: "compact",
-              },
-            ],
-          },
-        ],
-      },
     ] satisfies GovernanceLayerData[],
     bridges: [
       {
@@ -212,13 +196,30 @@ export const governanceStructureContent = {
         type: "authority",
         label: "Institutional authority branches into academic and non-academic governance.",
       },
-      {
-        afterLayerId: "governance-branches",
-        type: "advisory",
-        label: "Advisory guidance supports student bodies without changing reporting authority.",
-      },
     ] satisfies GovernanceBridgeData[],
   },
+  support: {
+    eyebrow: "Supporting roles",
+    title: "Governance Support",
+    description:
+      "Support roles strengthen student organizations without forming part of the governance hierarchy.",
+    cards: [
+      {
+        title: "Advisor",
+        description:
+          "A university individual appointed by the Rector to guide a specific student organization or community.",
+        relationship: "advisory",
+        appointedBy: "Rector",
+      },
+      {
+        title: "Coach",
+        description:
+          "Provides technical coaching, skill development, and performance improvement for Students' Clubs.",
+        relationship: "coaching",
+        appointedBy: "Student Affairs Office",
+      },
+    ],
+  } satisfies GovernanceSupportContent,
   legend: [
     {
       type: "authority",
@@ -229,11 +230,6 @@ export const governanceStructureContent = {
       type: "coordination",
       label: "Dashed Line",
       description: "Coordination",
-    },
-    {
-      type: "advisory",
-      label: "Dotted Green Line",
-      description: "Advisory",
     },
     {
       type: "reporting",
@@ -336,7 +332,7 @@ export const governanceNodes: GovernanceNodeData[] = [
       "Support HMPS alignment with academic priorities.",
     ],
     reportsTo: ["Dean"],
-    coordinatesWith: ["Departmental Students' Society (HMPS)", "Advisor"],
+    coordinatesWith: ["Departmental Students' Society (HMPS)"],
     futurePath: "/governance/head-of-study-program",
   },
   {
@@ -352,7 +348,7 @@ export const governanceNodes: GovernanceNodeData[] = [
       "Coordinate with program leadership and student governance bodies.",
     ],
     reportsTo: ["Head of Study Program"],
-    coordinatesWith: ["Students' Union", "Advisor"],
+    coordinatesWith: ["Students' Union"],
     futurePath: "/governance/HMPS",
   },
   {
@@ -376,15 +372,13 @@ export const governanceNodes: GovernanceNodeData[] = [
     name: "Student Affairs Office",
     layer: "Non-Academic",
     tone: "studentAffairs",
-    description: "Manages operational coordination, recognition, support, and student organization governance.",
-    roles: ["Operational coordination", "Recognition administration", "Student organization support"],
+    description: "Coordinates student governance by supporting organizations, leadership development, and institutional collaboration.",
+    roles: ["Recognition administration", "Student organization support"],
     responsibilities: [
-      "Coordinate student organization recognition and guidance.",
-      "Support Students' Union, club, and society activities.",
-      "Maintain governance documentation and activity alignment.",
+      "Oversees university-wide student organization governance and operational coordination.",
     ],
-    reportsTo: ["Vice Rector I"],
-    coordinatesWith: ["Students' Union", "Students' Club", "Students' Society", "Advisor"],
+    reportsTo: ["Vice Rector"],
+    coordinatesWith: ["Students' Union", "Students' Club", "Students' Society", "Advisors", "Coaches"],
     futurePath: "/governance/student-affairs-office",
   },
   {
@@ -400,7 +394,7 @@ export const governanceNodes: GovernanceNodeData[] = [
       "Support transparent student leadership and participation.",
     ],
     reportsTo: ["Student Affairs Office"],
-    coordinatesWith: ["Students' Club", "Students' Society", "Departmental Students' Society (HMPS)", "Advisor"],
+    coordinatesWith: ["Students' Club", "Students' Society", "Departmental Students' Society (HMPS)"],
     futurePath: "/governance/students-union",
   },
   {
@@ -416,7 +410,7 @@ export const governanceNodes: GovernanceNodeData[] = [
       "Coordinate with Students' Union and Student Affairs Office.",
     ],
     reportsTo: ["Student Affairs Office"],
-    coordinatesWith: ["Students' Union", "Students' Society", "Advisor"],
+    coordinatesWith: ["Students' Union", "Students' Society"],
     futurePath: "/governance/students-club",
   },
   {
@@ -432,122 +426,7 @@ export const governanceNodes: GovernanceNodeData[] = [
       "Maintain alignment with university policy and values.",
     ],
     reportsTo: ["Student Affairs Office"],
-    coordinatesWith: ["Students' Union", "Students' Club", "Advisor"],
+    coordinatesWith: ["Students' Union", "Students' Club"],
     futurePath: "/governance/students-society",
-  },
-  {
-    id: "advisor",
-    name: "Advisor",
-    layer: "Advisory Layer",
-    tone: "advisory",
-    description: "Provides guidance to student organizations without becoming part of the formal hierarchy.",
-    roles: ["Guidance", "Mentorship", "Governance support"],
-    responsibilities: [
-      "Provide guidance to student leaders and organizations.",
-      "Support responsible planning and decision-making.",
-      "Help student organizations align with academic and institutional expectations.",
-    ],
-    reportsTo: [],
-    coordinatesWith: [
-      "Departmental Students' Society (HMPS)",
-      "Students' Union",
-      "Students' Club",
-      "Students' Society",
-    ],
-    futurePath: "/governance/advisor",
-  },
-];
-
-export const governanceRelationships: GovernanceRelationshipData[] = [
-  {
-    id: "foundation-rector",
-    from: "foundation",
-    to: "rector",
-    type: "authority",
-    label: "Institutional authority",
-  },
-  {
-    id: "rector-dean",
-    from: "rector",
-    to: "dean",
-    type: "authority",
-    label: "Academic authority",
-  },
-  {
-    id: "rector-vice-rector",
-    from: "rector",
-    to: "vice-rector-I",
-    type: "authority",
-    label: "Student affairs authority",
-  },
-  {
-    id: "dean-head-program",
-    from: "dean",
-    to: "head-of-study-program",
-    type: "coordination",
-    label: "Academic coordination",
-  },
-  {
-    id: "head-program-HMPS",
-    from: "hmps",
-    to: "head-of-study-program",
-    type: "reporting",
-    label: "Departmental reporting",
-  },
-  {
-    id: "vice-rector-student-affairs",
-    from: "vice-rector-I",
-    to: "student-affairs-office",
-    type: "coordination",
-    label: "Student affairs coordination",
-  },
-  {
-    id: "student-affairs-union",
-    from: "students-union",
-    to: "student-affairs-office",
-    type: "reporting",
-    label: "Operational reporting",
-  },
-  {
-    id: "union-club",
-    from: "students-union",
-    to: "students-club",
-    type: "coordination",
-    label: "Community coordination",
-  },
-  {
-    id: "union-society",
-    from: "students-union",
-    to: "students-society",
-    type: "coordination",
-    label: "Community coordination",
-  },
-  {
-    id: "advisor-HMPS",
-    from: "advisor",
-    to: "HMPS",
-    type: "advisory",
-    label: "Advisory guidance",
-  },
-  {
-    id: "advisor-union",
-    from: "advisor",
-    to: "students-union",
-    type: "advisory",
-    label: "Advisory guidance",
-  },
-  {
-    id: "advisor-club",
-    from: "advisor",
-    to: "students-club",
-    type: "advisory",
-    label: "Advisory guidance",
-  },
-  {
-    id: "advisor-society",
-    from: "advisor",
-    to: "students-society",
-    type: "advisory",
-    label: "Advisory guidance",
   },
 ];

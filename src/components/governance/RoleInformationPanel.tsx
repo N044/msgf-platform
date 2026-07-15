@@ -31,7 +31,7 @@ export function RoleInformationPanel({ node }: RoleInformationPanelProps) {
           </div>
 
           <div>
-            <p className="text-sm font-semibold text-[#0A1737]">Responsibilities</p>
+            <p className="text-sm font-semibold text-[#0A1737]">Authority</p>
             <ul className="mt-3 space-y-2 text-sm leading-6 text-slate-600">
               {node.responsibilities.map((responsibility) => (
                 <li key={responsibility}>{responsibility}</li>
