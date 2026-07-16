@@ -67,6 +67,8 @@ export interface GovernanceSupportContent {
   eyebrow: string;
   title: string;
   description: string;
+  connectedToLayer: string;
+  connectionLabel: string;
   cards: GovernanceSupportCardData[];
 }
 
@@ -199,10 +201,12 @@ export const governanceStructureContent = {
     ] satisfies GovernanceBridgeData[],
   },
   support: {
-    eyebrow: "Supporting roles",
+    eyebrow: "Layer 3",
     title: "Governance Support",
     description:
-      "Support roles strengthen student organizations without forming part of the governance hierarchy.",
+      "An integrated support layer that strengthens the overnance branches through advisory guidance and coaching.",
+    connectedToLayer: "Layer 2 — Governance Branches",
+    connectionLabel: "Advisory and coaching support",
     cards: [
       {
         title: "Advisor",
@@ -338,7 +342,7 @@ export const governanceNodes: GovernanceNodeData[] = [
   {
     id: "HMPS",
     name: "Departmental Students' Society (HMPS)",
-    layer: "Academic ",
+    layer: "Student Organization",
     tone: "student",
     description: "Represents departmental student communities within the academic governance pathway.",
     roles: ["Departmental representation", "Academic community building", "Student participation"],
@@ -384,7 +388,7 @@ export const governanceNodes: GovernanceNodeData[] = [
   {
     id: "students-union",
     name: "Students' Union (BEM)",
-    layer: "Non-Academic",
+    layer: "Student Organization",
     tone: "student",
     description: "Represents student leadership and coordinates recognized student communities.",
     roles: ["Student representation", "Leadership coordination", "Community stewardship"],
@@ -400,7 +404,7 @@ export const governanceNodes: GovernanceNodeData[] = [
   {
     id: "students-club",
     name: "Students' Club (UKM)",
-    layer: "Non-Academic",
+    layer: "Student Organization",
     tone: "student",
     description: "Interest-based student communities recognized under the Student Governance Framework.",
     roles: ["Interest community", "Student activity platform", "Leadership development"],
@@ -415,8 +419,8 @@ export const governanceNodes: GovernanceNodeData[] = [
   },
   {
     id: "students-society",
-    name: "Students' Society (UKM-Sosial)",
-    layer: "Non-Academic",
+    name: "Students' Society (UKM)",
+    layer: "Student Organization",
     tone: "student",
     description: "Student communities that support academic, professional, religious, or social development.",
     roles: ["Community development", "Student support", "Professional and social participation"],

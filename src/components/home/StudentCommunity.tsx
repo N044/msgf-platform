@@ -1,3 +1,5 @@
+import Link from "next/link";
+
 import { Container } from "@/components/layout/Container";
 import { Section } from "@/components/layout/Section";
 import { Button } from "@/components/ui/Button";
@@ -8,6 +10,7 @@ interface CommunitySlide {
   badge?: string;
   description: string;
   pattern: "union" | "clubs" | "society";
+  href?: string;
 }
 
 const communitySlides: CommunitySlide[] = [
@@ -16,6 +19,7 @@ const communitySlides: CommunitySlide[] = [
     title: "Students' Union",
     description: "🏛️ Lead. Represent. Inspire.",
     pattern: "union",
+    href: "/student-communities/students-union",
   },
   {
     id: "students-clubs",
@@ -116,9 +120,18 @@ export function StudentCommunity() {
                       </div>
                     </div>
 
-                    <Button className="w-fit !bg-[#0A1737] !px-5 text-white group-hover:!bg-[#E78938]">
-                      Explore →
-                    </Button>
+                    {slide.href ? (
+                      <Link
+                        href={slide.href}
+                        className="inline-flex w-fit items-center justify-center rounded-full bg-[#0A1737] px-5 py-2.5 text-sm font-medium text-white transition-colors group-hover:bg-[#E78938]"
+                      >
+                        Explore →
+                      </Link>
+                    ) : (
+                      <Button className="w-fit !bg-[#0A1737] !px-5 text-white group-hover:!bg-[#E78938]">
+                        Explore →
+                      </Button>
+                    )}
                   </div>
                 </article>
               ))}
