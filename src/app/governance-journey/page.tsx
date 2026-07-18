@@ -28,7 +28,7 @@ export default function GovernanceJourneyPage() {
 
       <Section className="overflow-hidden bg-[#F8F4EC]">
         <Container>
-          <GovernanceJourneyCycles cycles={cycles} labels={summary} tabLabel={tabs.label} />
+          <GovernanceJourneyCycles cycles={cycles} labels={summary} tabLabel={tabs.label} tabPrompt={tabs.prompt}/>
         </Container>
       </Section>
     </main>

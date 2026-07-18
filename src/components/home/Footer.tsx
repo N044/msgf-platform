@@ -24,7 +24,7 @@ export function Footer() {
               </p>
             </div>
 
-            <Button className="bg-white px-6 text-slate-950 hover:bg-[#E78938] hover:text-white">
+            <Button className="bg-white !text-slate-950 hover:!bg-slate-100 hover:!text-slate-950">
               Contact Us
             </Button>
           </div>

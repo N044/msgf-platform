@@ -16,7 +16,7 @@ export function Button({
   const baseClasses = "inline-flex items-center justify-center rounded-full font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2";
   const variants = {
     primary: "bg-slate-900 text-white hover:bg-slate-700",
-    secondary: "border border-slate-300 bg-white text-slate-900 hover:bg-slate-50",
+    secondary: "border border-[#0A1737] bg-[#0A1737] text-white hover:bg-[#122653]",
     ghost: "bg-transparent text-slate-700 hover:bg-slate-100",
   };
   const sizes = {

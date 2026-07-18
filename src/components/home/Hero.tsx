@@ -24,7 +24,7 @@ export function Hero() {
               </p>
             </div>
             <div className="flex flex-wrap items-center gap-4">
-              <Button className="bg-white text-slate-950 hover:bg-slate-100">
+              <Button  className="!bg-white !text-slate-950 hover:!bg-slate-100 hover:!text-slate-950">
                 Explore
               </Button>
               <a href="#governance-overview" className="text-sm font-medium text-slate-300 transition hover:text-white">

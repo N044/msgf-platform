@@ -1,0 +1,8 @@
+import { Card } from "@/components/ui/Card";
+import type { GovernanceJourneyStage } from "@/content/governance-journey";
+
+interface PhaseDetailsProps { stage: GovernanceJourneyStage; }
+
+export function PhaseDetails({ stage }: PhaseDetailsProps) {
+  return <section className="grid gap-5 lg:grid-cols-[1.1fr_0.9fr]"><Card className="border-[#E6D7C5] border-t-4 border-t-[#B66B2A]"><div className="flex items-center gap-3"><span aria-hidden="true" className="flex h-9 w-9 items-center justify-center rounded-xl bg-[#FFF7EC] text-sm font-bold text-[#B66B2A]">01</span><p className="text-xs font-semibold uppercase tracking-[0.18em] text-[#B66B2A]">Phase details</p></div><h4 className="mt-6 text-2xl font-semibold text-[#0A1737]">Purpose</h4><p className="mt-3 leading-7 text-slate-700">{stage.purpose}</p><div className="mt-7 border-t border-[#F0E6D9] pt-6"><p className="text-xs font-semibold uppercase tracking-[0.16em] text-[#B66B2A]">Expected outcome</p><p className="mt-2 leading-7 text-slate-700">{stage.expectedOutcome}</p></div></Card><Card className="border-[#E6D7C5] border-t-4 border-t-[#0A1737]"><div className="flex items-center gap-3"><span aria-hidden="true" className="flex h-9 w-9 items-center justify-center rounded-xl bg-[#F8F4EC] text-sm font-bold text-[#0A1737]">02</span><p className="text-xs font-semibold uppercase tracking-[0.18em] text-[#B66B2A]">Objectives</p></div><ul className="mt-6 space-y-4">{stage.objectives.map((objective, index) => <li key={objective} className="flex gap-3 text-slate-700"><span aria-hidden="true" className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-[#F8F4EC] text-xs font-bold text-[#0A1737]">{index + 1}</span><span className="leading-6">{objective}</span></li>)}</ul></Card></section>;
+}
