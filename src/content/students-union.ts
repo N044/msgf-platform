@@ -13,6 +13,15 @@ export interface OrganizationRelationshipGroup {
   tone: "reporting" | "support" | "coordination";
 }
 
+export interface OrganizationHighlight {
+  id: string;
+  title: string;
+  value: string;
+  suffix: string;
+  label: string;
+  icon?: string;
+}
+
 export interface OrganizationResource {
   id: string;
   title: string;
@@ -48,7 +57,7 @@ export const studentsUnionContent = {
       { id: "structure", label: "Structure", href: "#organization-structure" },
       { id: "roles", label: "Roles", href: "#roles" },
       { id: "ministries", label: "Ministries", href: "#ministries" },
-      { id: "relationships", label: "Relationships", href: "#relationships" },
+      { id: "highlights", label: "Glance", href: "#highlights" },
       { id: "responsibilities", label: "Responsibilities", href: "#responsibilities" },
       { id: "resources", label: "Resources", href: "#resources" },
       { id: "contact", label: "Contact", href: "#contact" },
@@ -107,6 +116,11 @@ export const studentsUnionContent = {
       { id: "coordinates-with", label: "Coordinates With", items: ["Students' Clubs", "Students' Societies"], tone: "coordination" },
     ] satisfies OrganizationRelationshipGroup[],
   },
+  organizationHighlights: [
+    { id: "years-history", title: "Years of History", value: "25", suffix: "+", label: "Years of Leadership", icon: "CalendarIcon" },
+    { id: "current-members", title: "Current Members", value: "120", suffix: "+", label: "Active Student Leaders", icon: "UserGroupIcon" },
+    { id: "events-held", title: "Events Held", value: "350", suffix: "+", label: "Programs & Events", icon: "BoltIcon" },
+  ] satisfies OrganizationHighlight[],
   responsibilities: {
     eyebrow: "Key responsibilities",
     title: "What the Students' Union is here to advance.",

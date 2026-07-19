@@ -1,7 +1,7 @@
 import { OrganizationCardGrid } from "@/components/organization/OrganizationCardGrid";
+import { OrganizationHighlights } from "@/components/organization/OrganizationHighlights";
 import { OrganizationHierarchy } from "@/components/organization/OrganizationHierarchy";
 import { OrganizationPageNav } from "@/components/organization/OrganizationPageNav";
-import { OrganizationRelationships } from "@/components/organization/OrganizationRelationships";
 import { OrganizationRoleExplorer } from "@/components/organization/OrganizationRoleExplorer";
 import {
   OrganizationContact,
@@ -21,7 +21,7 @@ export default function StudentsUnionPage() {
     structure,
     roles,
     ministries,
-    relationships,
+    organizationHighlights,
     responsibilities,
     resources,
     contact,
@@ -57,7 +57,7 @@ export default function StudentsUnionPage() {
       <Section className="bg-white"><Container><OrganizationHierarchy {...structure} /></Container></Section>
       <Section className="bg-[#F8F4EC]"><Container><OrganizationRoleExplorer {...roles} /></Container></Section>
       <Section className="bg-white"><Container><OrganizationCardGrid {...ministries} sectionId="ministries" /></Container></Section>
-      <Section className="bg-[#F8F4EC]"><Container><OrganizationRelationships {...relationships} sectionId="relationships" /></Container></Section>
+      <Section className="bg-[#F8F4EC]"><Container><OrganizationHighlights eyebrow="At a glance" title="Students' Union at a Glance" highlights={organizationHighlights} sectionId="highlights" /></Container></Section>
       <Section className="bg-white"><Container><OrganizationCardGrid {...responsibilities} sectionId="responsibilities" /></Container></Section>
       <Section className="bg-[#F8F4EC]"><Container><OrganizationResources {...resources} sectionId="resources" /></Container></Section>
       <Section className="bg-slate-950"><Container><OrganizationContact {...contact} /></Container></Section>
