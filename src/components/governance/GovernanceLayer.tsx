@@ -1,5 +1,6 @@
 import { GovernanceNode } from "@/components/governance/GovernanceNode";
 import { GovernanceRelationship } from "@/components/governance/GovernanceRelationship";
+import { StudentGovernanceHierarchy } from "@/components/governance/StudentGovernanceHierarchy";
 
 import type {
   GovernanceLayerData,
@@ -21,6 +22,8 @@ const columnToneClasses: Record<GovernanceTone, string> = {
 };
 
 export function GovernanceLayer({ layer, nodesById }: GovernanceLayerProps) {
+  const isStudentGovernanceLayer = Boolean(layer.studentGovernanceHierarchy);
+
   return (
     <section className="rounded-[2rem] border border-slate-200 bg-white/80 p-5 shadow-[0_24px_80px_-58px_rgba(10,23,55,0.55)] sm:p-6 lg:p-8">
       <div className="mx-auto max-w-3xl space-y-3 text-center">
@@ -35,8 +38,14 @@ export function GovernanceLayer({ layer, nodesById }: GovernanceLayerProps) {
         </p>
       </div>
 
-      <div className={`mt-8 grid gap-6 ${layer.columns.length > 1 ? "lg:grid-cols-2" : ""}`}>
-        {layer.columns.map((column) => (
+      {isStudentGovernanceLayer ? (
+        <StudentGovernanceHierarchy
+          hierarchy={layer.studentGovernanceHierarchy!}
+          nodesById={nodesById}
+        />
+      ) : (
+        <div className={`mt-8 grid gap-6 ${(layer.columns?.length ?? 0) > 1 ? "lg:grid-cols-2" : ""}`}>
+          {layer.columns?.map((column) => (
           <div
             key={column.id}
             className={`rounded-[1.5rem] border p-5 sm:p-6 ${columnToneClasses[column.tone]}`}
@@ -83,8 +92,9 @@ export function GovernanceLayer({ layer, nodesById }: GovernanceLayerProps) {
               ))}
             </div>
           </div>
-        ))}
-      </div>
+          ))}
+        </div>
+      )}
     </section>
   );
 }

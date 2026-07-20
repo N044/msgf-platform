@@ -7,11 +7,14 @@ export type GovernanceTone =
   | "student"
   | "advisory";
 
+export type GovernanceNodeVisualVariant = "standard" | "union" | "council" | "cell";
+
 export interface GovernanceNodeData {
   id: string;
   name: string;
   layer: string;
   tone: GovernanceTone;
+  visualVariant?: GovernanceNodeVisualVariant;
   description: string;
   roles: string[];
   responsibilities: string[];
@@ -41,7 +44,19 @@ export interface GovernanceLayerData {
   eyebrow: string;
   title: string;
   description: string;
-  columns: GovernanceColumnData[];
+  columns?: GovernanceColumnData[];
+  studentGovernanceHierarchy?: GovernanceStudentGovernanceHierarchyData;
+}
+
+export interface GovernanceStudentGovernanceHierarchyData {
+  unionNodeId: string;
+  councilNodeId: string;
+  childNodeIds: string[];
+  unionConnectedChildNodeId: string;
+  executiveNodeId: string;
+  executiveCellNodeIds: [string, string, string, string];
+  clubSocietyNames?: string[];
+  hmpsChildNames?: string[];
 }
 
 export interface GovernanceBridgeData {
@@ -151,12 +166,6 @@ export const governanceStructureContent = {
               },
               {
                 nodeIds: ["head-of-study-program"],
-                relationshipToNext: "reporting",
-                relationshipLabel: "Departmental reporting",
-                relationshipDirection: "up",
-              },
-              {
-                nodeIds: ["HMPS"],
               },
             ],
           },
@@ -174,22 +183,62 @@ export const governanceStructureContent = {
               },
               {
                 nodeIds: ["student-affairs-office"],
-                relationshipToNext: "reporting",
-                relationshipLabel: "Operational reporting",
-                relationshipDirection: "up",
-              },
-              {
-                nodeIds: ["students-union"],
-                relationshipToNext: "coordination",
-                relationshipLabel: "Student coordination",
-              },
-              {
-                nodeIds: ["students-club", "students-society"],
-                variant: "compact",
               },
             ],
           },
         ],
+      },
+      {
+        id: "student-governance",
+        eyebrow: "Layer 3",
+        title: "Student Governance",
+        description:
+          "Student leadership is organized through the Students' Union, Council, and clearly connected governance bodies.",
+        studentGovernanceHierarchy: {
+          unionNodeId: "mikroskil-students-union",
+          councilNodeId: "council",
+          childNodeIds: [
+            "students-clubs-and-societies",
+            "executive-committee",
+            "faculty-students-society",
+          ],
+          unionConnectedChildNodeId: "faculty-students-society",
+          executiveNodeId: "executive-committee",
+          executiveCellNodeIds: [
+            "presidential-cell",
+            "finance-cell",
+            "internal-cell",
+            "communication-cell",
+          ],
+          clubSocietyNames: [
+            "Photography Club",
+            "Music Society",
+            "Debate Club",
+            "Robotics Club",
+            "Dance Society",
+            "Film Club",
+            "Chess Club",
+            "Environmental Society",
+            "Literary Club",
+            "Sports Club",
+            "AI Society",
+            "Business Club",
+            "Design Club",
+            "Volunteer Club",
+            "Language Society",
+            "Coding Club",
+            "Theatre Society",
+            "Cultural Club",
+          ],
+          hmpsChildNames: [
+            "Information Technology Student of Mikroskil",
+            "One Magister Information Technology Students",
+            "Ikatan Mahasiswa Manajemen",
+            "Ikatan Mahasiswa Akuntansi",
+            "Ikatan Mahasiswa Sistem Informasi",
+            "Big Family of Informatics Students Mikroskil",
+          ],
+        },
       },
     ] satisfies GovernanceLayerData[],
     bridges: [
@@ -198,14 +247,19 @@ export const governanceStructureContent = {
         type: "authority",
         label: "Institutional authority branches into academic and non-academic governance.",
       },
+      {
+        afterLayerId: "governance-branches",
+        type: "coordination",
+        label: "Key collaborators",
+      },
     ] satisfies GovernanceBridgeData[],
   },
   support: {
-    eyebrow: "Layer 3",
-    title: "Governance Support",
+    eyebrow: "Layer 4",
+    title: "Supporting Roles",
     description:
-      "An integrated support layer that strengthens the overnance branches through advisory guidance and coaching.",
-    connectedToLayer: "Layer 2 — Governance Branches",
+      "An integrated support layer that strengthens student governance through advisory guidance and coaching.",
+    connectedToLayer: "Layer 3 — Student Governance",
     connectionLabel: "Advisory and coaching support",
     cards: [
       {
@@ -432,5 +486,193 @@ export const governanceNodes: GovernanceNodeData[] = [
     reportsTo: ["Student Affairs Office"],
     coordinatesWith: ["Students' Union", "Students' Club"],
     futurePath: "/governance/students-society",
+  },
+  {
+    id: "mikroskil-students-union",
+    name: "Universitas Mikroskil",
+    layer: "Students' Union",
+    tone: "student",
+    visualVariant: "union",
+    description: "The university-wide student body that anchors the student governance structure.",
+    roles: ["Student representation", "Governance leadership", "University-wide coordination"],
+    responsibilities: [
+      "Provide the student governance mandate for the Council and Faculty Students' Society.",
+      "Coordinate student representation across university communities.",
+      "Maintain accountable student leadership structures.",
+    ],
+    reportsTo: ["Student Affairs Office"],
+    coordinatesWith: ["Council"],
+    futurePath: "/student-communities/students-union",
+  },
+  {
+    id: "council",
+    name: "Council",
+    layer: "Students' Union",
+    tone: "student",
+    visualVariant: "council",
+    description: "Provides shared oversight for the three student governance bodies connected beneath it.",
+    roles: ["Student oversight", "Representation", "Coordination"],
+    responsibilities: [
+      "Guide the three student governance bodies connected beneath it.",
+      "Coordinate university-wide student representation.",
+      "Support transparent governance decisions.",
+    ],
+    reportsTo: ["Mikroskil University Students' Union"],
+    coordinatesWith: [
+      "Students' Clubs",
+      "Executive Committee",
+      "Student Societies",
+    ],
+    futurePath: "/governance/council",
+  },
+  {
+    id: "students-clubs-and-societies",
+    name: "Students' Clubs & Societies",
+    layer: "Student Governance",
+    tone: "student",
+    description:
+      "Interest-based student communities and academic, professional, religious, and social development societies within the student governance structure.",
+    roles: ["Student communities", "Student activities", "Leadership development"],
+    responsibilities: [
+      "Represent recognized student clubs and societies.",
+      "Coordinate activities through the Council.",
+      "Develop student participation and leadership.",
+    ],
+    reportsTo: ["Council"],
+    coordinatesWith: ["Mikroskil University Students' Union"],
+    futurePath: "/governance/students-clubs-and-societies",
+  },
+  {
+    id: "students-clubs-governance",
+    name: "Students' Clubs",
+    layer: "Student Governance",
+    tone: "student",
+    description: "Interest-based student communities within the student governance structure.",
+    roles: ["Interest communities", "Student activities", "Leadership development"],
+    responsibilities: [
+      "Represent recognized interest-based student communities.",
+      "Coordinate activities through the Council.",
+      "Develop student participation and leadership.",
+    ],
+    reportsTo: ["Council"],
+    coordinatesWith: ["Mikroskil University Students' Union"],
+    futurePath: "/governance/students-clubs",
+  },
+  {
+    id: "executive-committee",
+    name: "Executive Committee",
+    layer: "Student Governance",
+    tone: "student",
+    description: "Leads the execution of student governance priorities and programs.",
+    roles: ["Executive leadership", "Program delivery", "Governance implementation"],
+    responsibilities: [
+      "Implement student governance priorities.",
+      "Coordinate executive programs and operations.",
+      "Report progress through the Council.",
+    ],
+    reportsTo: ["Council"],
+    coordinatesWith: ["Mikroskil University Students' Union"],
+    futurePath: "/governance/executive-committee",
+  },
+  {
+    id: "student-societies-governance",
+    name: "Student Societies",
+    layer: "Student Governance",
+    tone: "student",
+    description: "Student communities for academic, professional, religious, and social development.",
+    roles: ["Community development", "Student support", "Participation"],
+    responsibilities: [
+      "Represent recognized student societies.",
+      "Coordinate society activities through the Council.",
+      "Support student development beyond the classroom.",
+    ],
+    reportsTo: ["Council"],
+    coordinatesWith: ["Mikroskil University Students' Union"],
+    futurePath: "/governance/student-societies",
+  },
+  {
+    id: "faculty-students-society",
+    name: "Faculty Students' Society (HMPS)",
+    layer: "Student Governance",
+    tone: "student",
+    description:
+      "Represents faculty student communities through a direct relationship with the Students' Union.",
+    roles: ["Faculty representation", "Academic community", "Student participation"],
+    responsibilities: [
+      "Represent student interests at faculty level.",
+      "Coordinate faculty community activity through the Students' Union.",
+      "Support academic and student community participation.",
+    ],
+    reportsTo: ["Mikroskil University Students' Union"],
+    coordinatesWith: [],
+    futurePath: "/governance/faculty-students-society",
+  },
+  {
+    id: "presidential-cell",
+    name: "Presidential Cell",
+    layer: "Executive Cell",
+    tone: "student",
+    visualVariant: "cell",
+    description: "Supports presidential leadership and strategic coordination within the Executive Committee.",
+    roles: ["Presidential support", "Strategic coordination", "Executive leadership"],
+    responsibilities: [
+      "Support presidential leadership priorities.",
+      "Coordinate strategic Executive Committee work.",
+      "Maintain alignment across executive cells.",
+    ],
+    reportsTo: ["Executive Committee"],
+    coordinatesWith: [],
+    futurePath: "/governance/presidential-cell",
+  },
+  {
+    id: "finance-cell",
+    name: "Finance Cell",
+    layer: "Executive Cell",
+    tone: "student",
+    visualVariant: "cell",
+    description: "Coordinates financial planning, records, and accountability for executive work.",
+    roles: ["Financial planning", "Budget coordination", "Accountability"],
+    responsibilities: [
+      "Coordinate executive financial planning.",
+      "Maintain accurate financial records.",
+      "Support accountable budget use.",
+    ],
+    reportsTo: ["Executive Committee"],
+    coordinatesWith: [],
+    futurePath: "/governance/finance-cell",
+  },
+  {
+    id: "internal-cell",
+    name: "Internal Cell",
+    layer: "Executive Cell",
+    tone: "student",
+    visualVariant: "cell",
+    description: "Strengthens internal coordination, communication, and delivery across executive work.",
+    roles: ["Internal coordination", "Team alignment", "Operations support"],
+    responsibilities: [
+      "Coordinate internal executive activity.",
+      "Support team alignment and delivery.",
+      "Maintain effective internal communication.",
+    ],
+    reportsTo: ["Executive Committee"],
+    coordinatesWith: [],
+    futurePath: "/governance/internal-cell",
+  },
+  {
+    id: "communication-cell",
+    name: "Communication Cell",
+    layer: "Executive Cell",
+    tone: "student",
+    visualVariant: "cell",
+    description: "Leads clear communication and information sharing for executive initiatives.",
+    roles: ["Communications", "Information sharing", "Public engagement"],
+    responsibilities: [
+      "Coordinate communication for executive initiatives.",
+      "Maintain clear information sharing.",
+      "Support student engagement through communication.",
+    ],
+    reportsTo: ["Executive Committee"],
+    coordinatesWith: [],
+    futurePath: "/governance/communication-cell",
   },
 ];
