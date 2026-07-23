@@ -133,34 +133,38 @@ export function GovernanceNode({ node, compact = false, className = "", children
         tabIndex={0}
         data-node-id={node.id}
         data-future-route={node.futurePath}
-        className={`group relative flex flex-col items-center justify-center text-center focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#E78938] focus-visible:ring-offset-2 ${className}`}
+        className={`group relative flex flex-col justify-center text-center focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#E78938] focus-visible:ring-offset-2 ${className}`}
       >
-        {/* Stem from above connecting to line */}
-        <span
-          aria-hidden="true"
-          className="absolute left-1/2 top-0 h-8 w-px -translate-x-1/2 bg-[#0A1737]/25"
-        />
+        {/* Card wrapper — left-aligns the board card */}
+        <div className="flex w-full justify-start">
+          <div className="flex w-full max-w-[40rem] flex-col items-center gap-4 rounded-2xl border-2 border-[#0A1737] bg-white px-6 py-6 shadow-[0_16px_48px_-36px_rgba(10,23,55,0.6)]">
+            {/* Multi-diamond row — each diamond represents a constituency on the board */}
+            <div className="flex items-center gap-1.5">
+              <span className="block h-2 w-2 rotate-45 border border-[#0A1737]/40 bg-[#FFF8F0]" />
+              <span className="block h-2 w-2 rotate-45 border border-[#0A1737]/60 bg-[#FFF8F0]" />
+              <span className="block h-[1.125rem] w-[1.125rem] rotate-45 border-2 border-[#0A1737] bg-[#FFF8F0] shadow-[0_4px_12px_-8px_rgba(10,23,55,0.35)]" />
+              <span className="block h-2 w-2 rotate-45 border border-[#0A1737]/60 bg-[#FFF8F0]" />
+              <span className="block h-2 w-2 rotate-45 border border-[#0A1737]/40 bg-[#FFF8F0]" />
+            </div>
 
-        {/* Diamond waypoint — no card container */}
-        <div className="flex items-center justify-center">
-          <span className="block h-4 w-4 rotate-45 border-2 border-[#0A1737] bg-[#FFF8F0]" />
+            <div className="space-y-1">
+              <p className="text-[0.6rem] font-semibold uppercase tracking-[0.24em] text-[#B66B2A]">
+                {node.layer}
+              </p>
+              <h3 className="text-xl font-bold tracking-tight text-[#0A1737]">
+                {node.name}
+              </h3>
+            </div>
+
+            {!compact ? (
+              <div className="w-full space-y-3 border-t border-[#0A1737]/10 pt-4">
+                <p className="mx-auto max-w-xs text-sm leading-6 text-slate-600">
+                  {node.description}
+                </p>
+              </div>
+            ) : null}
+          </div>
         </div>
-
-        {/* Bare text label — no border, no background, no shadow */}
-        <div className="mt-2 space-y-0.5">
-          <p className="text-[0.55rem] font-semibold uppercase tracking-[0.2em] text-[#B66B2A]">
-            {node.layer}
-          </p>
-          <h3 className="text-sm font-bold tracking-tight text-[#0A1737]">
-            {node.name}
-          </h3>
-        </div>
-
-        {/* Stem to children below */}
-        <span
-          aria-hidden="true"
-          className="absolute bottom-0 left-1/2 h-16 w-px -translate-x-1/2 bg-[#0A1737]/25"
-        />
       </article>
     );
   }

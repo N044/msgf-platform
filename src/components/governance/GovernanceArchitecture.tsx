@@ -36,6 +36,7 @@ export function GovernanceArchitecture({
                 <GovernanceRelationship
                   type={bridge.type}
                   label={bridge.label}
+                  direction="up"
                   className="py-6"
                 />
               ) : null}
